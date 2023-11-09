@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+      max-width: 1024px;
+      margin: auto;
+      padding-left: 10px;
+      padding-right: 10px;
+}
