@@ -1,55 +1,52 @@
-import Header from "components/Header"
-import Shop from "components/Shop"
-import Footer from "components/Footer"
+import ExpensesForm from "components/Form"
+import Costs from "components/Costs"
 import { useState } from "react"
+import ExpensesChart from "components/Chart"
+import ErrorModalWindow from "components/ErrorModal"
+
 
 function App() {
-    
-    const [shops, setShops] = useState([
-        {
-            id: 1,
-            title: 'Молоко',
-            status: 'Добавлено!'
-        },
-        {
-            id: 2,
-            title: 'Хлеб',
-            status: 'Добавлено!'
-        },
-        {
-            id: 3,
-            title: 'Шоколад',
-            status: 'Добавлено!'
-        },
-        {
-            id: 4,
-            title: 'Яйца',
-            status: 'Добавлено!'
-        },
-        {
-            id: 5,
-            title: 'Апельсины',
-            status: 'Добавлено!'
-        },
-    ])
 
-    const deleteShop = (id) => {
-        const filteredShops = shops.filter(shop => shop.id !== id)
-        setShops(filteredShops)
+    const [expensesList, setExpensesList] = useState([]) // здесь хранятся расходы пользователя
+    const [errorModal, setErrorModal] = useState(false) // состояние ошибки
+
+    // функция для добавления нового расхода (покупки) в список расходов
+    const handleAddExpense = (expense) => {
+
+        if (!expense.cost || expense.cost <= 0) {
+
+            setErrorModal(true)
+            return
+        } else {
+            setExpensesList(prevExpense => [...prevExpense, expense])
+        }
     }
- 
+
+    const closeModalError = () => {
+        setErrorModal(false)
+    }
+
+    // функция для общей суммы всех расходов
+
+    const calculateTotalExpense = () => {
+
+        return expensesList.reduce((sum, expense) => sum + parseFloat(expense.cost), 0)
+    }
+
     return (
-        <div>
-            <Header />
-            <div className="mx-10 min-h-screen">
-                {shops.length === 0 && (<div className="mt-20 text-center text-6xl text-gray-400 font-thin">Список покупок пуст</div>)}
-                {shops.length > 0 && shops.map((shop) => {
-                    return (
-                        <Shop key={shop.id} shop={shop} deleteShop={deleteShop} />
-                    )
-                })}
-            </div>
-            <Footer />
+        <div className="content w-1/2 bg-slate-100 rounded shadow-md">
+            <h1 className="pb-10 text-center text-4xl font-semibold">Учёт расходов</h1>
+            {errorModal && <ErrorModalWindow closeModalError={closeModalError} />}
+            <ExpensesForm handleAddExpense={handleAddExpense} />
+            <ExpensesChart expensesList={expensesList} />
+            
+            <p className="my-3 text-2xl">Общая сумма расходов: {calculateTotalExpense()} руб.</p>
+            {expensesList.map((expense, index) => {
+                return (
+                    <Costs key={index} expense={expense} />
+                )
+            })}
+
         </div>
     )
 }
