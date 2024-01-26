@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, Legend, Tooltip } from "recharts"
 import './styles.css'
 
-const COLORS = ['#2563EB', '#22C55E', '#FDE047', '#B45309', '#DC2626', '#6366F1']
+const COLORS = ['#2563EB', '#22C55E', '#FDE048', '#B45309', '#DC2626', '#6366F1']
 
 function ExpensesChart({ expensesList }) {
 
@@ -47,45 +47,51 @@ function ExpensesChart({ expensesList }) {
             value: totalValueForCategory
         }
     })
+    
 
     return (
         <div className="flex items-center">
             {expensesList.length === 0 ? (
-                <p className="mt-7 text-xl">Здесь появится Ваша диаграмма расходов</p>
+                <div className="mt-4">
+                    <p className="text-xl">Здесь появится Ваша диаграмма расходов</p>
+                    <img className="mt-2 mb-2" src="/chart.jpeg" alt="Диаграмма"/>
+                </div>
             ) : (
-                <>
-                    <PieChart width={400} height={400}>
-                        <Pie
-                            data={dataOfUser}
-                            cx={200}
-                            cy={200}
-                            labelLine={false}
-                            outerRadius={100}
-                            fill='#8884d8'
-                            dataKey="value"
-                        >
-                            {dataOfUser.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                    </PieChart>
+                <div className="flex flex-col md:flex-row gap-2 justify-end md:items-center">
+                    <>
+                        <PieChart width={400} height={400}>
+                            <Pie
+                                data={dataOfUser}
+                                cx={200}
+                                cy={200}
+                                labelLine={false}
+                                outerRadius={100}
+                                fill='#8884d8'
+                                dataKey="value"
+                            >
+                                {dataOfUser.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
 
-                    <div className="recharts-legend-wrapper w-1/2 pl-2">
-                        <Legend 
-                            align="right"
-                            verticalAlign="middle"
-                            layout="vertical"
-                            wrapperStyle={{ right: 10, top: 0, bottom: 0 }}
-                            payload={dataOfUser.map((category, index) => ({
-                                id: category.name,
-                                type: "rect",
-                                value: `${category.name} - ${dataOfUser[index].value}`,
-                                color: COLORS[index % COLORS.length]
-                            }))}
-                        />
-                    </div>
-                </>
+                        <div className="recharts-legend-wrapper w-1/2">
+                            <Legend 
+                                align="right"
+                                verticalAlign="middle"
+                                layout="vertical"
+                                wrapperStyle={{ right: 10, top: 0, bottom: 0 }}
+                                payload={dataOfUser.map((category, index) => ({
+                                    id: category.name,
+                                    type: "rect",
+                                    value: `${category.name} - ${dataOfUser[index].value}`,
+                                    color: COLORS[index % COLORS.length]
+                                }))}
+                            />
+                        </div>
+                    </>
+                </div>
             )}
         </div> 
     )

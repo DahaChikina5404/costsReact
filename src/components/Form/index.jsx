@@ -1,9 +1,13 @@
-import { useState } from "react"
+import React, { useState } from "react"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import Button from "components/Button"
 
 function ExpensesForm({ handleAddExpense }) {
 
     const [cost, setCost] = useState('') // хранится введенная пользователем сумма расхода
     const [title, setTitle] = useState('Образование') // хранится выбранная категория
+    const [startDate, setStartDate] = useState(new Date()) // Выбор даты трат
 
     // функция обрабатывает отправленную форму
     const handleSubmitForm = (event) => {
@@ -11,7 +15,8 @@ function ExpensesForm({ handleAddExpense }) {
 
         const sale = {
             cost: parseFloat(cost),
-            title
+            title,
+            startDate
         }
 
         handleAddExpense(sale)
@@ -19,20 +24,28 @@ function ExpensesForm({ handleAddExpense }) {
         //очистка формы
         setCost('')
         setTitle('Образование')
+        setStartDate(new Date())
+
+    }
+
+    const onChange = (event) => {  // Проверка ввода числового значения
+        const oldValue = event.target.value
+        const newVAlue = oldValue.replace(/\D+/, '')
+        setCost(newVAlue)
     }
 
     return (
-        <form onSubmit={handleSubmitForm} className="flex gap-2 justify-between items-center">
+        <form onSubmit={handleSubmitForm} className="flex flex-col md:flex-row gap-2 justify-between md:items-center">
             <input 
-                className="pl-2 h-10 w-1/3 border border-solid border-slate-400 rounded"
+                className="pl-2 h-10 md:w-1/3 border border-solid border-slate-400 rounded"
                 placeholder="00.00"
                 name="cost"
-                type="number"
+                type="text"
                 value={cost}
-                onChange={(event) => setCost(event.target.value)}/>
+                onChange={onChange}/>
         
             <select 
-                className="pl-2 h-10 w-1/3 border border-solid border-slate-400 rounded"
+                className="pl-2 h-10 md:w-1/3 border border-solid border-slate-400 rounded"
                 name="title"
                 type="text"
                 value={title}
@@ -44,13 +57,14 @@ function ExpensesForm({ handleAddExpense }) {
                     <option>Развлечения</option>
                     <option>Путешествия</option>
             </select> 
-      
-            <button 
-                className="h-10 w-1/5 text-white bg-indigo-600 rounded p-1 hover:bg-indigo-800 transition-all duration-300" 
-                type="submit"
-            >
-                Добавить
-            </button>
+
+            <DatePicker
+                className="pl-2 h-10 border border-solid border-slate-400 rounded bg-white"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                dateFormat="dd.MM.yyyy" /> 
+           
+            <Button title="Добавить" />
         </form>
     )
 }
