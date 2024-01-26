@@ -33,7 +33,6 @@ function App() {
     
     
     //const categoryFilter = expensesList.filter
-
    // expensesList.map //мы получили масссив трат и можем теперь их фильтровать!!!
       
     // function categoryFilter(currentCategory) { // Фильтр по категормм
