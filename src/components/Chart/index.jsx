@@ -83,7 +83,7 @@ function ExpensesChart({ expensesList }) {
                             <Tooltip />
                         </PieChart>
 
-                        <div className="recharts-legend-wrapper w-1/2 text-xl">
+                        <div className="recharts-legend-wrapper md:w-1/2 text-xl">
                             <Legend 
                                 align="right"
                                 verticalAlign="middle"
