@@ -1,4 +1,5 @@
 import { PieChart, Pie, Cell, Legend, Tooltip } from "recharts"
+import { PacmanLoader } from "react-spinners"
 import './styles.css'
 
 const COLORS = ['#2563EB', '#22C55E', '#FDE048', '#B45309', '#DC2626', '#6366F1']
@@ -47,17 +48,23 @@ function ExpensesChart({ expensesList }) {
             value: totalValueForCategory
         }
     })
-    
 
     return (
         <div className="flex items-center">
             {expensesList.length === 0 ? (
-                <div className="mt-4">
-                    <p className="text-xl">Здесь появится Ваша диаграмма расходов</p>
-                    <img className="mt-2 mb-2" src="/chart.jpeg" alt="Диаграмма"/>
+                <div className="my-10 mx-auto">
+                    <p className="text-xl my-5">Здесь появится диаграмма Ваших расходов</p>
+                    <PacmanLoader
+                        color="#4f46e5"
+                        cssOverride={{}}
+                        loading
+                        margin={10}
+                        size={100}
+                        speedMultiplier={1}
+                    />
                 </div>
             ) : (
-                <div className="flex flex-col md:flex-row gap-2 justify-end md:items-center">
+                <div className="flex flex-col md:flex-row gap-2 justify-center md:items-center">
                     <>
                         <PieChart width={400} height={400}>
                             <Pie
@@ -76,7 +83,7 @@ function ExpensesChart({ expensesList }) {
                             <Tooltip />
                         </PieChart>
 
-                        <div className="recharts-legend-wrapper w-1/2">
+                        <div className="recharts-legend-wrapper w-1/2 text-xl">
                             <Legend 
                                 align="right"
                                 verticalAlign="middle"

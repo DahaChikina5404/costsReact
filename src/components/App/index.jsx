@@ -5,7 +5,6 @@ import ExpensesChart from "components/Chart"
 import ErrorModalWindow from "components/ErrorModal"
 import Button from "components/Button"
 
-
 function App() {
 
     const [expensesList, setExpensesList] = useState([]) // МАССИВ расходов пользователя
@@ -20,7 +19,7 @@ function App() {
             return
         } else {
             const expenseWithCat = {...expense, category: expense.title}
-            setExpensesList(prevExpense => [...prevExpense, expenseWithCat].sort((a, b) => new Date(a.startDate) - new Date(b.startDate)))
+            setExpensesList(prevExpense => [...prevExpense, expenseWithCat].sort((a, b) => new Date(b.startDate) - new Date(a.startDate)))
         }
     }
 
@@ -64,15 +63,16 @@ function App() {
                 <Button title='Путешествия' onClick={() => handleCategoryFilter('Путешествия')} />
             </div>
 
-            {filteredExpenses.length === 0 ? ( // условие если в выбранной категории нет трат
-                <p className="my-5 text-center text-lg md:text-xl">Нет трат в выбранной категории!</p>
-            ) : (
-                filteredExpenses.map((expense, index) => {
-                    return (
-                        <Costs key={index} expense={expense} />
-                    )
-                })
-            )}
+            {(selectedCategory === 'all' && filteredExpenses.length === 0) ? null : (
+                filteredExpenses.length === 0 ? ( // условие если в выбранной категории нет трат
+                    <p className="my-5 text-center text-lg md:text-xl text-indigo-600">Нет расходов в выбранной категории!</p>
+                ) : (
+                    filteredExpenses.map((expense, index) => {
+                        return (
+                            <Costs key={index} expense={expense} />
+                        )
+                    })
+                ))}
         </div>
     )
 }
