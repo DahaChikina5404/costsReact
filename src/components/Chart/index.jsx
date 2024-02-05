@@ -64,7 +64,7 @@ function ExpensesChart({ expensesList }) {
                     />
                 </div>
             ) : (
-                <div className="flex flex-col md:flex-row gap-2 justify-center md:items-center">
+                <div className="flex flex-col lg:flex-row gap-2 justify-center md:items-center">
                     <>
                         <PieChart width={400} height={400}>
                             <Pie

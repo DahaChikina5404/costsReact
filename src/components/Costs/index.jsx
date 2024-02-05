@@ -3,7 +3,7 @@ import { ru } from 'date-fns/locale'
 
 function Costs({ expense }) {
 
-    const formatDate = new Date (expense.startDate)
+    const formatDate = new Date(expense.startDate)
   
     return (
         <div className="pt-6 text-sm md:text-xl flex gap-5 justify-between items-center border-b-2 border-solid border-indigo-200">
@@ -12,11 +12,9 @@ function Costs({ expense }) {
                 <p>{expense.title}</p>
             </div>
            
-            <div className="flex gap-1">
-                <p>-</p>
-                <p>{expense.cost},00</p>
-                <p>р.</p>
-            </div>
+            <p>
+                - <span>{expense.cost},00</span> р.
+            </p>
         </div>
     )
 }
